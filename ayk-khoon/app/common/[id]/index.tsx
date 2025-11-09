@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { ChatBubble } from '../../../components/ChatBubble';
-import { COLORS, SPACING, FONT_SIZES } from '../../../utils/theme';
-import { dummyMessages } from '../../../utils/dummyData';
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ChatBubble } from "../../../components/ChatBubble";
+import { dummyMessages } from "../../../utils/dummyData";
+import { COLORS, FONT_SIZES, SPACING } from "../../../utils/theme";
 
 export default function ChatDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(dummyMessages);
 
   const handleSend = () => {
@@ -19,21 +28,24 @@ export default function ChatDetail() {
         ...messages,
         {
           id: `msg-${Date.now()}`,
-          chatId: id || 'chat-1',
-          senderId: 'user-1',
+          chatId: id || "chat-1",
+          senderId: "user-1",
           text: message,
           createdAt: new Date(),
           read: false,
         },
       ]);
-      setMessage('');
+      setMessage("");
     }
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={styles.backButton}
+        >
           <Ionicons name="arrow-back" size={24} color={COLORS.text} />
         </TouchableOpacity>
         <View style={styles.headerInfo}>
@@ -47,15 +59,18 @@ export default function ChatDetail() {
 
       <KeyboardAvoidingView
         style={styles.chatContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={90}
       >
-        <ScrollView style={styles.messagesContainer} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.messagesContainer}
+          showsVerticalScrollIndicator={false}
+        >
           {messages.map((msg) => (
             <ChatBubble
               key={msg.id}
               message={msg}
-              isOwnMessage={msg.senderId === 'user-1'}
+              isOwnMessage={msg.senderId === "user-1"}
             />
           ))}
         </ScrollView>
@@ -84,8 +99,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grayMedium,
@@ -99,12 +114,12 @@ const styles = StyleSheet.create({
   },
   headerName: {
     fontSize: FONT_SIZES.lg,
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.text,
   },
   onlineStatus: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
     marginTop: 2,
   },
@@ -126,8 +141,8 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.md,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    alignItems: "flex-end",
     padding: SPACING.md,
     borderTopWidth: 1,
     borderTopColor: COLORS.grayMedium,

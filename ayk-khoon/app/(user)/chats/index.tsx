@@ -1,18 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { Card } from '../../../components/Card';
-import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../../utils/theme';
-import { dummyChats } from '../../../utils/dummyData';
-import { formatTimeAgo } from '../../../utils/validation';
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "../../../components/Card";
+import { dummyChats } from "../../../utils/dummyData";
+import {
+  BORDER_RADIUS,
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+} from "../../../utils/theme";
+import { formatTimeAgo } from "../../../utils/validation";
 
 export default function Chats() {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
       <View style={styles.header}>
         <Text style={styles.title}>Chats</Text>
       </View>
@@ -20,7 +31,7 @@ export default function Chats() {
         {dummyChats.map((chat) => (
           <TouchableOpacity
             key={chat.id}
-            onPress={() => router.push(`/(user)/chats/${chat.id}`)}
+            onPress={() => router.push(`/common/${chat.id}`)}
             activeOpacity={0.7}
           >
             <Card style={styles.chatCard}>
@@ -31,10 +42,12 @@ export default function Chats() {
                 <View style={styles.chatInfo}>
                   <View style={styles.chatHeader}>
                     <Text style={styles.chatName}>
-                      {chat.participants.find((p) => p.id !== 'user-1')?.name || 'User'}
+                      {chat.participants.find((p) => p.id !== "user-1")?.name ||
+                        "User"}
                     </Text>
                     <Text style={styles.chatTime}>
-                      {chat.lastMessage && formatTimeAgo(chat.lastMessage.createdAt)}
+                      {chat.lastMessage &&
+                        formatTimeAgo(chat.lastMessage.createdAt)}
                     </Text>
                   </View>
                   {chat.lastMessage && (
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONT_SIZES.xxl,
-    fontWeight: '700',
+    fontWeight: "700",
     color: COLORS.text,
   },
   content: {
@@ -80,8 +93,8 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.md,
   },
   chatRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: SPACING.md,
   },
   avatar: {
@@ -89,20 +102,20 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   chatInfo: {
     flex: 1,
   },
   chatHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 4,
   },
   chatName: {
     fontSize: FONT_SIZES.md,
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.text,
   },
   chatTime: {
@@ -118,13 +131,13 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS.round,
     minWidth: 24,
     height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 8,
   },
   unreadText: {
     color: COLORS.white,
     fontSize: FONT_SIZES.xs,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 });

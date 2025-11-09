@@ -1,7 +1,7 @@
-import { Stack } from 'expo-router';
-import { AuthProvider } from '../context/AuthContext';
-import { ModeProvider } from '../context/ModeContext';
-import Toast from 'react-native-toast-message';
+import { Stack } from "expo-router";
+import Toast from "react-native-toast-message";
+import { AuthProvider } from "../context/AuthContext";
+import { ModeProvider } from "../context/ModeContext";
 
 export default function RootLayout() {
   return (
@@ -11,7 +11,7 @@ export default function RootLayout() {
           <Stack.Screen name="splash" />
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(user)" />
+          {/* <Stack.Screen name="(user)" /> */}
           <Stack.Screen name="(bloodbank)" />
         </Stack>
         <Toast />
