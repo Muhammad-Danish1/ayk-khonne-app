@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { Button } from '../../../components/Button';
 import { RequestCard } from '../../../components/RequestCard';
 import { COLORS, SPACING, FONT_SIZES } from '../../../utils/theme';
 import { dummyRequests } from '../../../utils/dummyData';
-import { useToast } from '../../../hooks/useToast';
 
 export default function Home() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'need' | 'donate'>('need');
-  const { showSuccess } = useToast();
-
-  const handleHelp = () => {
-    showSuccess('Chat started!');
-  };
 
   const handlePostRequest = () => {
-    showSuccess('Post request modal will open here');
+    router.push('/(user)/home/create-request');
+  };
+
+  const handleRequestTap = (requestId: string) => {
+    router.push(`/(user)/home/request-detail?id=${requestId}`);
   };
 
   return (
@@ -54,7 +54,11 @@ export default function Home() {
             />
             <Text style={styles.sectionTitle}>Your Requests</Text>
             {dummyRequests.slice(0, 1).map((request) => (
-              <RequestCard key={request.id} request={request} />
+              <RequestCard
+                key={request.id}
+                request={request}
+                onPress={() => handleRequestTap(request.id)}
+              />
             ))}
           </View>
         ) : (
@@ -65,7 +69,8 @@ export default function Home() {
                 key={request.id}
                 request={request}
                 showHelpButton
-                onHelp={handleHelp}
+                onPress={() => handleRequestTap(request.id)}
+                onHelp={() => handleRequestTap(request.id)}
               />
             ))}
           </View>
