@@ -1,24 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { Button } from '../../../components/Button';
 import { Card } from '../../../components/Card';
+import { useAuth } from '../../../context/AuthContext';
+import { useMode } from '../../../context/ModeContext';
 import { useToast } from '../../../hooks/useToast';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../../utils/theme';
 
 export default function Dashboard() {
+  const router = useRouter();
+  const { updateUser } = useAuth();
+  const { switchMode } = useMode();
   const { showSuccess } = useToast();
 
   const handleSendAlert = () => {
     showSuccess('Alert sent to all donors!');
   };
 
+  const handleSwitchToUser = () => {
+    updateUser({ mode: 'user' });
+    switchMode('user');
+    router.replace('/(user)/home');
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Dashboard</Text>
-        <Text style={styles.subtitle}>Central Blood Bank</Text>
+        <View style={styles.headerContent}>
+          <View>
+            <Text style={styles.headerTitle}>Dashboard</Text>
+            <Text style={styles.subtitle}>Central Blood Bank</Text>
+          </View>
+          <TouchableOpacity onPress={handleSwitchToUser} style={styles.switchButton}>
+            <Ionicons name="person" size={20} color={COLORS.secondary} />
+            <Text style={styles.switchText}>User Mode</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -95,6 +115,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grayMedium,
   },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   headerTitle: {
     fontSize: FONT_SIZES.xxl,
     fontWeight: '700',
@@ -104,6 +129,20 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.sm,
     color: COLORS.grayDark,
     marginTop: 4,
+  },
+  switchButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: COLORS.secondary + '20',
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  switchText: {
+    color: COLORS.secondary,
+    fontSize: FONT_SIZES.sm,
+    fontWeight: '600',
   },
   content: {
     flex: 1,

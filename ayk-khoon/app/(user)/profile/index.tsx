@@ -24,6 +24,7 @@ export default function Profile() {
   };
 
   const handleSwitchToBloodBank = () => {
+    updateUser({ mode: 'bloodbank' });
     switchMode('bloodbank');
     router.replace('/(bloodbank)/dashboard');
   };

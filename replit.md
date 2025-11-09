@@ -55,13 +55,16 @@ ayk-khoon/
 1. ✅ Splash screen with logo and auto-navigation
 2. ✅ 3-slide onboarding carousel
 3. ✅ Email/password signup and login
-4. ✅ Profile setup modal (name, phone, blood group)
-5. ✅ User mode with 5-tab bottom navigation
-6. ✅ Home tab with Need Blood / Donate sub-tabs
-7. ✅ Blood request cards with urgency badges
-8. ✅ Design system with consistent colors and spacing
-9. ✅ Toast notifications for all actions
-10. ✅ Dummy data for realistic demonstration
+4. ✅ Profile setup modal (name, phone, blood group, **role selection**)
+5. ✅ **Role-based navigation** - automatic bottom bar based on user role
+6. ✅ User mode with 5-tab bottom navigation
+7. ✅ Blood Bank mode with 4-tab bottom navigation
+8. ✅ Home tab with Need Blood / Donate sub-tabs
+9. ✅ Blood request cards with urgency badges
+10. ✅ Design system with consistent colors and spacing
+11. ✅ Toast notifications for all actions
+12. ✅ Mode switching (User ↔ Blood Bank)
+13. ✅ Dummy data for realistic demonstration
 
 ## Features Pending
 - Complete blood request creation modal
@@ -95,15 +98,24 @@ This will show a QR code that you can scan with:
 ## User Journey
 1. Splash → Onboarding (first time)
 2. Login / Signup
-3. Profile Setup (collect phone, name, blood group)
-4. User Home (5 tabs):
-   - **Home:** Need Blood / Donate with requests list
-   - **Chats:** Conversation list (pending)
-   - **Alerts:** Notifications feed (pending)
-   - **History:** Donation timeline (pending)
-   - **Profile:** Edit info + Become Blood Bank option
-5. Blood Bank Mode (pending):
-   - Dashboard, Stock, Requests, Reports
+3. Profile Setup (collect phone, name, blood group, **select role**)
+   - **Regular User** → User Home (5 tabs)
+   - **Blood Bank Owner** → Blood Bank Home (4 tabs)
+
+### Regular User Journey (5 tabs):
+- **Home:** Need Blood / Donate with requests list
+- **Chats:** Conversation list (pending)
+- **Alerts:** Notifications feed (pending)
+- **History:** Donation timeline (pending)
+- **Profile:** Edit info + Switch to Blood Bank option
+
+### Blood Bank Owner Journey (4 tabs):
+- **Dashboard:** Stats, alerts, "Switch to User Mode" button
+- **Stock:** Inventory management
+- **Requests:** Nearby blood requests
+- **Reports:** Analytics and charts
+
+**Role Switching:** Users can switch between User and Blood Bank modes anytime from the Dashboard or Profile screen.
 
 ## Data Management
 - **Frontend Only:** No backend/Firebase integration

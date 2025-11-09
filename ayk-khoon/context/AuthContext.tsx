@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setTimeout(() => {
       setAuthState({
         isAuthenticated: true,
-        user: { ...dummyUser, email, name: '', phone: '', bloodGroup: 'O+' },
+        user: { ...dummyUser, email, name: '', phone: '', bloodGroup: 'O+', mode: 'user' },
         isLoading: false,
       });
     }, 500);
