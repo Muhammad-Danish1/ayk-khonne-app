@@ -1,13 +1,5 @@
-import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
-import { LoadingSpinner } from '../components/LoadingSpinner';
+import { Redirect } from 'expo-router';
 
 export default function Index() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace('/splash');
-  }, []);
-
-  return <LoadingSpinner />;
+  return <Redirect href="/splash" />;
 }

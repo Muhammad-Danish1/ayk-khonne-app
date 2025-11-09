@@ -14,13 +14,12 @@ export default function Signup() {
   const { showSuccess, showError } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
     let hasErrors = false;
-    const newErrors = { email: '', password: '', confirmPassword: '' };
+    const newErrors = { email: '', password: '' };
 
     if (!validateEmail(email)) {
       newErrors.email = 'Please enter a valid email';
@@ -29,11 +28,6 @@ export default function Signup() {
 
     if (!validatePassword(password)) {
       newErrors.password = 'Password must be at least 6 characters';
-      hasErrors = true;
-    }
-
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
       hasErrors = true;
     }
 
@@ -86,16 +80,6 @@ export default function Signup() {
               isPassword
               icon="lock-closed"
               error={errors.password}
-            />
-
-            <Input
-              label="Confirm Password"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholder="Confirm password"
-              isPassword
-              icon="lock-closed"
-              error={errors.confirmPassword}
             />
 
             <Button

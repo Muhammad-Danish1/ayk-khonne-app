@@ -11,7 +11,6 @@ export default function RootLayout() {
           <Stack.Screen name="splash" />
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="(user)" />
           <Stack.Screen name="(bloodbank)" />
         </Stack>
