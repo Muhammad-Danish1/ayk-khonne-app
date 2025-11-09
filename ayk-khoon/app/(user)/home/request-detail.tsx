@@ -70,10 +70,35 @@ export default function RequestDetail() {
           <Text style={styles.value}>{formatTimeAgo(request.createdAt)}</Text>
         </View>
 
-        <View style={styles.mapPlaceholder}>
-          <Ionicons name="map" size={48} color={COLORS.primary} />
-          <Text style={styles.mapText}>Hospital Location</Text>
-          <Text style={styles.mapSubtext}>{request.hospital}</Text>
+        <View style={styles.mapContainer}>
+          <View style={styles.mapMock}>
+            <View style={styles.mapGrid}>
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <View key={`h-${i}`} style={[styles.mapGridLine, { top: i * 33.33 }]} />
+              ))}
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <View key={`v-${i}`} style={[styles.mapGridLineVertical, { left: `${i * 16.67}%` }]} />
+              ))}
+            </View>
+            <View style={styles.mapRoute}>
+              <View style={styles.routeLine} />
+            </View>
+            <View style={styles.mapMarkerUser}>
+              <Ionicons name="person" size={20} color={COLORS.white} />
+            </View>
+            <View style={styles.mapMarkerHospital}>
+              <Ionicons name="location" size={32} color={COLORS.primary} />
+            </View>
+            <View style={styles.mapOverlay}>
+              <View style={styles.mapOverlayContent}>
+                <Ionicons name="business" size={20} color={COLORS.secondary} />
+                <Text style={styles.mapOverlayText}>{request.hospital}</Text>
+              </View>
+              {request.distance !== undefined && (
+                <Text style={styles.mapDistanceText}>{formatDistance(request.distance)} away</Text>
+              )}
+            </View>
+          </View>
         </View>
 
         <View style={styles.chatPreview}>
@@ -169,25 +194,102 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: '600',
   },
-  mapPlaceholder: {
-    height: 150,
-    backgroundColor: COLORS.grayLight,
+  mapContainer: {
+    height: 200,
     borderRadius: BORDER_RADIUS.md,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     marginBottom: SPACING.lg,
     borderWidth: 1,
     borderColor: COLORS.grayMedium,
   },
-  mapText: {
-    fontSize: FONT_SIZES.md,
-    color: COLORS.text,
-    fontWeight: '600',
-    marginTop: SPACING.sm,
+  mapMock: {
+    flex: 1,
+    backgroundColor: '#F0F4F8',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  mapSubtext: {
+  mapGrid: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  mapGridLine: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 1,
+    backgroundColor: COLORS.grayMedium + '60',
+  },
+  mapGridLineVertical: {
+    position: 'absolute',
+    width: 1,
+    height: '100%',
+    top: 0,
+    backgroundColor: COLORS.grayMedium + '60',
+  },
+  mapRoute: {
+    position: 'absolute',
+    top: 60,
+    left: 30,
+    width: 120,
+    height: 60,
+  },
+  routeLine: {
+    width: '100%',
+    height: '100%',
+    borderTopWidth: 3,
+    borderRightWidth: 3,
+    borderColor: COLORS.secondary,
+    borderStyle: 'dashed',
+    borderTopRightRadius: BORDER_RADIUS.md,
+  },
+  mapMarkerUser: {
+    position: 'absolute',
+    bottom: 80,
+    left: 30,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: COLORS.success,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: COLORS.white,
+    zIndex: 10,
+  },
+  mapMarkerHospital: {
+    position: 'absolute',
+    top: 60,
+    right: 100,
+    zIndex: 10,
+  },
+  mapOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: COLORS.white + 'F5',
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.grayMedium,
+  },
+  mapOverlayContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+  },
+  mapOverlayText: {
     fontSize: FONT_SIZES.sm,
+    fontWeight: '600',
+    color: COLORS.text,
+    flex: 1,
+  },
+  mapDistanceText: {
+    fontSize: FONT_SIZES.xs,
     color: COLORS.grayDark,
+    marginTop: 2,
   },
   chatPreview: {
     backgroundColor: COLORS.grayLight,

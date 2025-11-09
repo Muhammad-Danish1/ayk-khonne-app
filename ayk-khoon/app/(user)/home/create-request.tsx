@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 import { BloodGroupPicker } from '../../../components/BloodGroupPicker';
@@ -9,7 +10,6 @@ import { useToast } from '../../../hooks/useToast';
 import { BloodGroup, UNITS_OPTIONS } from '../../../utils/constants';
 import { validateName } from '../../../utils/validation';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../../utils/theme';
-import { TouchableOpacity } from 'react-native';
 
 export default function CreateRequest() {
   const router = useRouter();
@@ -125,9 +125,23 @@ export default function CreateRequest() {
           </View>
         </View>
 
-        <View style={styles.mapPlaceholder}>
-          <Text style={styles.mapText}>📍 Map Preview</Text>
-          <Text style={styles.mapSubtext}>Hospital location will be shown here</Text>
+        <View style={styles.mapContainer}>
+          <View style={styles.mapMock}>
+            <View style={styles.mapGrid}>
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <View key={`h-${i}`} style={[styles.mapGridLine, { top: i * 33.33 }]} />
+              ))}
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <View key={`v-${i}`} style={[styles.mapGridLineVertical, { left: `${i * 16.67}%` }]} />
+              ))}
+            </View>
+            <View style={styles.mapMarker}>
+              <Ionicons name="location" size={32} color={COLORS.primary} />
+            </View>
+            <View style={styles.mapOverlay}>
+              <Text style={styles.mapOverlayText}>📍 {hospital || 'Hospital Location'}</Text>
+            </View>
+          </View>
         </View>
 
         <Button title="Post Request" onPress={handleSubmit} loading={loading} />
@@ -203,23 +217,59 @@ const styles = StyleSheet.create({
   urgencyTextActive: {
     color: COLORS.white,
   },
-  mapPlaceholder: {
-    height: 150,
-    backgroundColor: COLORS.grayLight,
+  mapContainer: {
+    height: 200,
     borderRadius: BORDER_RADIUS.md,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     marginBottom: SPACING.lg,
     borderWidth: 1,
     borderColor: COLORS.grayMedium,
   },
-  mapText: {
-    fontSize: FONT_SIZES.lg,
-    color: COLORS.text,
-    marginBottom: SPACING.xs,
+  mapMock: {
+    flex: 1,
+    backgroundColor: '#F0F4F8',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  mapSubtext: {
+  mapGrid: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  mapGridLine: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 1,
+    backgroundColor: COLORS.grayMedium,
+  },
+  mapGridLineVertical: {
+    position: 'absolute',
+    width: 1,
+    height: '100%',
+    top: 0,
+    backgroundColor: COLORS.grayMedium,
+  },
+  mapMarker: {
+    position: 'absolute',
+    top: 84,
+    left: '50%',
+    transform: [{ translateX: -16 }],
+    zIndex: 10,
+  },
+  mapOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: COLORS.white + 'F0',
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+  },
+  mapOverlayText: {
     fontSize: FONT_SIZES.sm,
-    color: COLORS.grayDark,
+    fontWeight: '600',
+    color: COLORS.text,
   },
 });
